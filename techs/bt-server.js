@@ -21,7 +21,7 @@ module.exports = require('enb/lib/build-flow').create()
     .defineOption('btFile', '')
     .useFileList(['bt.js'])
     .needRebuild(function(cache) {
-        this._btFile = this._btFile || 'node_modules/bt/lib/bt.js';
+        this._btFile = this._btFile || 'node_modules/enb-bt/lib/bt.js';
         this._btFile = this.node._root + '/' + this._btFile;
         return cache.needRebuildFile('bt-file', this._btFile);
     })
