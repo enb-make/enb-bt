@@ -1,4 +1,4 @@
 /**
- * Экспортируем только BH.
+ * Экспортируем только BT.
  */
-exports.BH = require('./lib/bt');
+exports.BT = require('./lib/bt');
