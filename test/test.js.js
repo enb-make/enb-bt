@@ -1,52 +1,25 @@
-var BH = require('../lib/bh');
+var BT = require('../lib/bt');
 require('chai').should();
 
 describe('ctx.js()', function() {
-    var bh;
+    var bt;
     beforeEach(function() {
-        bh = new BH();
+        bt = new BT();
     });
-    it('should return js', function() {
-        bh.match('button', function(ctx) {
-            ctx.js().should.equal(true);
+    it('should return autoInit', function() {
+        bt.match('button', function(ctx) {
+            ctx.isAutoInitEnabled().should.equal(true);
         });
-        bh.apply({ block: 'button', js: true });
+        bt.apply({ block: 'button', autoInit: true });
     });
-    it('should set js', function() {
-        bh.match('button', function(ctx) {
-            ctx.js(true);
+    it('should set autoInit', function() {
+        bt.match('button', function(ctx) {
+            ctx.enableAutoInit();
         });
-        bh.apply({ block: 'button' }).should.equal('<div class="button i-bem" onclick="return {&quot;button&quot;:{}};"></div>');
-    });
-    it('should not override user js', function() {
-        bh.match('button', function(ctx) {
-            ctx.js(true);
-        });
-        bh.apply({ block: 'button', js: { x: 1 } })
-            .should.equal('<div class="button i-bem" onclick="return {&quot;button&quot;:{&quot;x&quot;:1}};"></div>');
-    });
-    it('should not override later declarations', function() {
-        bh.match('button', function(ctx) {
-            ctx.js(false);
-        });
-        bh.match('button', function(ctx) {
-            ctx.js(true);
-        });
-        bh.apply({ block: 'button' }).should.equal('<div class="button i-bem" onclick="return {&quot;button&quot;:{}};"></div>');
-    });
-    it('should override later declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.js(false, true);
-        });
-        bh.match('button', function(ctx) {
-            ctx.js(true);
-        });
-        bh.apply({ block: 'button' }).should.equal('<div class="button"></div>');
-    });
-    it('should override user declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.js(false, true);
-        });
-        bh.apply({ block: 'button', js: true }).should.equal('<div class="button"></div>');
+        bt.apply({ block: 'button', autoInit: true }).should.equal(
+            '<div class="button _init" data-block="button" data-init></div>'
+        );
     });
 });
+
+

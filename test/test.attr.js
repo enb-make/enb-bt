@@ -1,51 +1,36 @@
-var BH = require('../lib/bh');
+var BT = require('../lib/bt');
 require('chai').should();
 
-describe('ctx.attr()', function() {
-    var bh;
+describe('ctx.getAttr()', function() {
+    var bt;
     beforeEach(function() {
-        bh = new BH();
+        bt = new BT();
     });
     it('should return attr', function() {
-        bh.match('button', function(ctx) {
-            ctx.attr('type').should.equal('button');
+        bt.match('button', function(ctx) {
+            ctx.setAttr('type', 'button');
+            ctx.getAttr('type').should.equal('button');
         });
-        bh.apply({ block: 'button', attrs: {type: 'button'} });
+        bt.apply({ block: 'button' });
+    });
+});
+
+describe('ctx.setAttr()', function() {
+    var bt;
+    beforeEach(function() {
+        bt = new BT();
     });
     it('should set attr', function() {
-        bh.match('button', function(ctx) {
-            ctx.attr('type', 'button');
+        bt.match('button', function(ctx) {
+            ctx.setAttr('type', 'button');
         });
-        bh.apply({ block: 'button' }).should.equal('<div class="button" type="button"></div>');
+        bt.apply({ block: 'button' }).should.equal('<div class="button" data-block="button" type="button"></div>');
     });
-    it('should not override user attr', function() {
-        bh.match('button', function(ctx) {
-            ctx.attr('type', 'button');
+    it('should render non-value attrs', function() {
+        bt.match('button', function(ctx) {
+            ctx.setTag('button');
+            ctx.setAttr('disabled', true);
         });
-        bh.apply({ block: 'button', attrs: {type: 'link'} }).should.equal('<div class="button" type="link"></div>');
-    });
-    it('should not override later declarations', function() {
-        bh.match('button', function(ctx) {
-            ctx.attr('type', 'control');
-        });
-        bh.match('button', function(ctx) {
-            ctx.attr('type', 'button');
-        });
-        bh.apply({ block: 'button' }).should.equal('<div class="button" type="button"></div>');
-    });
-    it('should override later declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.attr('type', 'control', true);
-        });
-        bh.match('button', function(ctx) {
-            ctx.attr('type', 'button');
-        });
-        bh.apply({ block: 'button' }).should.equal('<div class="button" type="control"></div>');
-    });
-    it('should override user declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.attr('type', 'button', true);
-        });
-        bh.apply({ block: 'button', attrs: {type: 'link'} }).should.equal('<div class="button" type="button"></div>');
+        bt.apply({ block: 'button' }).should.equal('<button class="button" data-block="button" disabled></button>');
     });
 });

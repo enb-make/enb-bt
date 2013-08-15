@@ -1,15 +1,15 @@
-var BH = require('../lib/bh');
+var BT = require('../lib/bt');
 require('chai').should();
 
 describe('ctx.generateId()', function() {
-    var bh;
+    var bt;
     beforeEach(function() {
-        bh = new BH();
+        bt = new BT();
     });
     it('should generate different ids', function() {
-        bh.match('button', function(ctx) {
+        bt.match('button', function(ctx) {
             ctx.generateId().should.not.equal(ctx.generateId());
         });
-        bh.apply({ block: 'button' });
+        bt.apply({ block: 'button' });
     });
 });

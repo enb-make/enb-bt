@@ -1,21 +1,21 @@
-var BH = require('../lib/bh');
+var BT = require('../lib/bt');
 require('chai').should();
 
 describe('ctx.stop()', function() {
-    var bh;
+    var bt;
     beforeEach(function() {
-        bh = new BH();
+        bt = new BT();
     });
     it('should prevent base matching', function() {
-        bh.match('button', function(ctx) {
-            ctx.tag('button', true);
+        bt.match('button', function(ctx) {
+            ctx.setTag('button');
         });
-        bh.match('button', function(ctx) {
-            ctx.tag('span');
+        bt.match('button', function(ctx) {
+            ctx.setTag('span');
             ctx.stop();
         });
-        bh.apply({ block: 'button' }).should.equal(
-            '<span class="button"></span>'
+        bt.apply({ block: 'button' }).should.equal(
+            '<span class="button" data-block="button"></span>'
         );
     });
 });

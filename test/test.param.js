@@ -1,51 +1,15 @@
-var BH = require('../lib/bh');
+var BT = require('../lib/bt');
 require('chai').should();
 
-describe('ctx.param()', function() {
-    var bh;
+describe('ctx.getParam()', function() {
+    var bt;
     beforeEach(function() {
-        bh = new BH();
+        bt = new BT();
     });
     it('should return param', function() {
-        bh.match('button', function(ctx) {
-            ctx.param('type').should.equal('button');
+        bt.match('button', function(ctx) {
+            ctx.getParam('type').should.equal('button');
         });
-        bh.apply({ block: 'button', type: 'button' });
-    });
-    it('should set param', function() {
-        bh.match('button', function(ctx) {
-            ctx.param('type', 'button');
-        });
-        bh.processBemJson({ block: 'button' }).type.should.equal('button');
-    });
-    it('should not override user param', function() {
-        bh.match('button', function(ctx) {
-            ctx.param('type', 'button');
-        });
-        bh.processBemJson({ block: 'button', type: 'link' }).type.should.equal('link');
-    });
-    it('should not override later declarations', function() {
-        bh.match('button', function(ctx) {
-            ctx.param('type', 'control');
-        });
-        bh.match('button', function(ctx) {
-            ctx.param('type', 'button');
-        });
-        bh.processBemJson({ block: 'button' }).type.should.equal('button');
-    });
-    it('should override later declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.param('type', 'control', true);
-        });
-        bh.match('button', function(ctx) {
-            ctx.param('type', 'button');
-        });
-        bh.processBemJson({ block: 'button' }).type.should.equal('control');
-    });
-    it('should override user declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.param('type', 'button', true);
-        });
-        bh.processBemJson({ block: 'button', type: 'link' }).type.should.equal('button');
+        bt.apply({ block: 'button', type: 'button' });
     });
 });

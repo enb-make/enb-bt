@@ -1,8 +1,8 @@
 /**
- * bh-server
+ * bt-server
  * =========
  * 
- * Склеивает *bh*-файлы по deps'ам с помощью набора `require` в виде `?.bemhtml.js`.
+ * Склеивает *bt*-файлы по deps'ам с помощью набора `require` в виде `?.bemhtml.js`.
  * 
  * **Опции**
  * 
@@ -12,26 +12,26 @@
  * **Пример**
  * 
  * ```javascript
- * nodeConfig.addTech(require('bh/techs/bh-server'));
+ * nodeConfig.addTech(require('bt/techs/bt-server'));
  * ```
  */
 module.exports = require('enb/lib/build-flow').create()
-    .name('bh-server')
-    .target('target', '?.bemhtml.js')
-    .defineOption('bhFile', '')
-    .useFileList(['bh.js'])
+    .name('bt-server')
+    .target('target', '?.bt.js')
+    .defineOption('btFile', '')
+    .useFileList(['bt.js'])
     .needRebuild(function(cache) {
-        this._bhFile = this._bhFile || 'node_modules/bh/lib/bh.js';
-        this._bhFile = this.node._root + '/' + this._bhFile;
-        return cache.needRebuildFile('bh-file', this._bhFile);
+        this._btFile = this._btFile || 'node_modules/bt/lib/bt.js';
+        this._btFile = this.node._root + '/' + this._btFile;
+        return cache.needRebuildFile('bt-file', this._btFile);
     })
     .saveCache(function(cache) {
-        cache.cacheFileInfo('bh-file', this._bhFile);
+        cache.cacheFileInfo('bt-file', this._btFile);
     })
-    .builder(function(bhFiles) {
+    .builder(function(btFiles) {
         var node = this.node;
         /**
-         * Генерирует `require`-строку для подключения исходных bh-файлов.
+         * Генерирует `require`-строку для подключения исходных bt-файлов.
          * 
          * @param {String} absPath
          * @param {String} pre
@@ -45,13 +45,13 @@ module.exports = require('enb/lib/build-flow').create()
             ].join('\n');
         }
         return [
-            buildRequire(this._bhFile, 'var BH = '),
-            'var bh = new BH();',
-            bhFiles.map(function(file) {
-                return buildRequire(file.fullname, '', '(bh)');
+            buildRequire(this._btFile, 'var BT = '),
+            'var bt = new BT();',
+            btFiles.map(function(file) {
+                return buildRequire(file.fullname, '', '(bt)');
             }).join('\n'),
-            'module.exports = bh;',
-            'bh.BEMHTML = { apply: function(bemjson) { return bh.apply(bemjson); } };'
+            'module.exports = bt;',
+            'bt.BEMHTML = { apply: function(bemjson) { return bt.apply(bemjson); } };'
         ].join('\n');
     })
     .createTech();

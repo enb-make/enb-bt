@@ -2,21 +2,21 @@ function BHController($scope) {
 
     $scope.compiledHtml = function() {
         $scope.error = '';
-        var bh = new BH(), json;
+        var bt = new BT(), json;
         try {
             json = eval('(' + $scope.data.inputBemjson + ')');
         } catch (e) {
-            return 'BEMJSON parse error:\n' + e.stack;
+            return 'BT JSON parse error:\n' + e.stack;
         }
         try {
             eval($scope.data.inputMatchers);
         } catch (e) {
             return 'Matchers parse error:\n' + e.stack;
         }
-        bh.enableInfiniteLoopDetection(true);
+        bt.enableInfiniteLoopDetection(true);
         var res = '';
         try {
-            res = bh.apply(json).replace(/>/g, '>\n').replace(/([^>\n])</g, '$1\n<');
+            res = bt.apply(json).replace(/>/g, '>\n').replace(/([^>\n])</g, '$1\n<');
         } catch (e) {
             return 'Execution error:\n' + e.stack;
         }
@@ -25,19 +25,16 @@ function BHController($scope) {
 
     $scope.loadSettings = function(settings) {
         $scope.data = angular.fromJson(settings);
-        $scope.data.inputBemjson = $scope.data.inputBemjson || '{ block: \'button\', content: \'Кнопка\' }';
+        $scope.data.inputBemjson = $scope.data.inputBemjson || '{ block: \'button\', text: \'Кнопка\' }';
         $scope.data.inputMatchers = $scope.data.inputMatchers ||
-            'bh.match(\'button\', function(ctx) {\n' +
-            '    ctx.tag(\'button\');\n' +
-            '    ctx.attr(\'role\', \'button\');\n' +
-            '    ctx.content({\n' +
-            '        elem: \'text\',\n' +
-            '        content: ctx.content()\n' +
-            '    }, true);\n' +
+            'bt.match(\'button\', function(ctx) {\n' +
+            '    ctx.setTag(\'button\');\n' +
+            '    ctx.setAttr(\'role\', \'button\');\n' +
+            '    ctx.setContent(ctx.getParam(\'text\'));\n' +
             '});\n';
     };
-    $scope.loadSettings(localStorage['bh-config-settings-2'] || '{}');
+    $scope.loadSettings(localStorage['bt-config-settings'] || '{}');
     window.setInterval(function() {
-        localStorage['bh-config-settings-2'] = angular.toJson($scope.data);
+        localStorage['bt-config-settings'] = angular.toJson($scope.data);
     }, 1000);
 }

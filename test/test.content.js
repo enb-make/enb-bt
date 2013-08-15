@@ -1,69 +1,46 @@
-var BH = require('../lib/bh');
+var BT = require('../lib/bt');
 require('chai').should();
 
-describe('ctx.content()', function() {
-    var bh;
+describe('ctx.setContent()', function() {
+    var bt;
     beforeEach(function() {
-        bh = new BH();
-    });
-    it('should return bemjson content', function() {
-        bh.match('button', function(ctx) {
-            ctx.content().should.equal('Hello');
-        });
-        bh.apply({ block: 'button', content: 'Hello' });
+        bt = new BT();
     });
     it('should set bemjson content', function() {
-        bh.match('button', function(ctx) {
-            ctx.content({ elem: 'text' });
+        bt.match('button', function(ctx) {
+            ctx.setContent({ elem: 'text' });
         });
-        bh.apply({ block: 'button' }).should.equal('<div class="button"><div class="button__text"></div></div>');
+        bt.apply({ block: 'button' }).should.equal(
+            '<div class="button" data-block="button"><div class="button__text"></div></div>'
+        );
     });
     it('should set bemjson array content', function() {
-        bh.match('button', function(ctx) {
-            ctx.content([{ elem: 'text1' }, { elem: 'text2' }]);
+        bt.match('button', function(ctx) {
+            ctx.setContent([{ elem: 'text1' }, { elem: 'text2' }]);
         });
-        bh.apply({ block: 'button' }).should.equal('<div class="button"><div class="button__text1"></div><div class="button__text2"></div></div>');
+        bt.apply({ block: 'button' }).should.equal(
+            '<div class="button" data-block="button">' +
+                '<div class="button__text1"></div>' +
+                '<div class="button__text2"></div>' +
+            '</div>'
+        );
     });
     it('should set bemjson string content', function() {
-        bh.match('button', function(ctx) {
-            ctx.content('Hello World');
+        bt.match('button', function(ctx) {
+            ctx.setContent('Hello World');
         });
-        bh.apply({ block: 'button' }).should.equal('<div class="button">Hello World</div>');
+        bt.apply({ block: 'button' }).should.equal('<div class="button" data-block="button">Hello World</div>');
     });
     it('should set bemjson numeric content', function() {
-        bh.match('button', function(ctx) {
-            ctx.content(123);
+        bt.match('button', function(ctx) {
+            ctx.setContent(123);
         });
-        bh.apply({ block: 'button' }).should.equal('<div class="button">123</div>');
+        bt.apply({ block: 'button' }).should.equal('<div class="button" data-block="button">123</div>');
     });
-    it('should not override user content', function() {
-        bh.match('button', function(ctx) {
-            ctx.content({ elem: 'text' });
+    it('should set bemjson zero-numeric content', function() {
+        bt.match('button', function(ctx) {
+            ctx.setContent(0);
         });
-        bh.apply({ block: 'button', content: 'Hello' }).should.equal('<div class="button">Hello</div>');
-    });
-    it('should not override later declarations', function() {
-        bh.match('button', function(ctx) {
-            ctx.content({ elem: 'text2' });
-        });
-        bh.match('button', function(ctx) {
-            ctx.content({ elem: 'text1' });
-        });
-        bh.apply({ block: 'button' }).should.equal('<div class="button"><div class="button__text1"></div></div>');
-    });
-    it('should override later declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.content({ elem: 'text2' }, true);
-        });
-        bh.match('button', function(ctx) {
-            ctx.content({ elem: 'text1' });
-        });
-        bh.apply({ block: 'button' }).should.equal('<div class="button"><div class="button__text2"></div></div>');
-    });
-    it('should override user declarations with force flag', function() {
-        bh.match('button', function(ctx) {
-            ctx.content({ elem: 'text' });
-        });
-        bh.apply({ block: 'button', content: 'Hello' }).should.equal('<div class="button">Hello</div>');
+        bt.apply({ block: 'button' }).should.equal('<div class="button" data-block="button">0</div>');
     });
 });

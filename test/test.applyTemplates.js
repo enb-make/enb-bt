@@ -1,21 +1,21 @@
-var BH = require('../lib/bh');
+var BT = require('../lib/bt');
 require('chai').should();
 
-describe('ctx.applyBase()', function() {
-    var bh;
+describe('ctx.applyTemplates()', function() {
+    var bt;
     beforeEach(function() {
-        bh = new BH();
+        bt = new BT();
     });
     it('should apply templates new mod', function() {
-        bh.match('button', function(ctx) {
-            ctx.mod('type', 'span');
+        bt.match('button', function(ctx) {
             ctx.applyTemplates();
+            ctx.setTag('span');
         });
-        bh.match('button_type_span', function(ctx) {
-            ctx.tag('span');
+        bt.match('button', function(ctx) {
+            ctx.setTag('button');
         });
-        bh.apply({ block: 'button' }).should.equal(
-            '<span class="button button_type_span"></span>'
+        bt.apply({ block: 'button' }).should.equal(
+            '<span class="button" data-block="button"></span>'
         );
     });
 });
