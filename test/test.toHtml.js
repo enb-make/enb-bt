@@ -83,15 +83,16 @@ describe('bt.toHtml()', function() {
             bt = new BT();
         });
         it('should render views', function() {
-            bt.match('button_def', function(ctx) {
+//            bt.setDefaultView('button', 'def');
+            bt.match('button_def*', function(ctx) {
                 ctx.setTag('a');
-                ctx.setContent({elem: 'text'});
+                ctx.setContent([{elem: 'right'}]);
             });
-            bt.match('button_def__text', function(ctx) {
+            bt.match('button_def*__right', function(ctx) {
                 ctx.setTag('span');
             });
-            bt.apply({ block: 'button', view: 'def' }).should.equal(
-                '<a class="button_def" data-block="button"><span class="button_def__text"></span></a>'
+            bt.apply({ block: 'button', view: 'def-xxx-yyy' }).should.equal(
+                '<a class="button_def-xxx-yyy" data-block="button"><span class="button_def-xxx-yyy__right"></span></a>'
             );
         });
     });
