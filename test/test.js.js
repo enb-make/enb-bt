@@ -17,7 +17,7 @@ describe('ctx.js()', function() {
             ctx.enableAutoInit();
         });
         bt.apply({ block: 'button', autoInit: true }).should.equal(
-            '<div class="button _init" data-block="button" data-init></div>'
+            '<div class="button _init" data-block="button"></div>'
         );
     });
 });
