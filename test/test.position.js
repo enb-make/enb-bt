@@ -24,9 +24,9 @@ describe('ctx.isFirst() / ctx.isLast() / ctx.getPosition', function() {
         });
         bt.apply({ block: 'button' }).should.equal(
             '<div class="button" data-block="button">' +
-            '<div class="button__inner first_yes"></div>' +
+            '<div class="button__inner _first_yes"></div>' +
             '<div class="button__inner"></div>' +
-            '<div class="button__inner last_yes"></div>' +
+            '<div class="button__inner _last_yes"></div>' +
             '</div>'
         );
     });
@@ -43,9 +43,9 @@ describe('ctx.isFirst() / ctx.isLast() / ctx.getPosition', function() {
         });
         bt.apply({ block: 'button' }).should.equal(
             '<div class="button" data-block="button">' +
-            '<div class="button__inner pos_1"></div>' +
-            '<div class="button__inner pos_2"></div>' +
-            '<div class="button__inner pos_3"></div>' +
+            '<div class="button__inner _pos_1"></div>' +
+            '<div class="button__inner _pos_2"></div>' +
+            '<div class="button__inner _pos_3"></div>' +
             '</div>'
         );
     });
@@ -66,9 +66,9 @@ describe('ctx.isFirst() / ctx.isLast() / ctx.getPosition', function() {
         });
         bt.apply({ block: 'button' }).should.equal(
             '<div class="button" data-block="button">' +
-            '<div class="button__inner first_yes"></div>' +
+            '<div class="button__inner _first_yes"></div>' +
             '<div class="button__inner"></div>' +
-            '<div class="button__inner last_yes"></div>' +
+            '<div class="button__inner _last_yes"></div>' +
             '</div>'
         );
     });
@@ -86,7 +86,7 @@ describe('ctx.isFirst() / ctx.isLast() / ctx.getPosition', function() {
         });
         bt.apply({ block: 'button' }).should.equal(
             '<div class="button" data-block="button">' +
-            '<div class="button__inner first_yes last_yes"></div>' +
+            '<div class="button__inner _first_yes _last_yes"></div>' +
             '</div>'
         );
     });

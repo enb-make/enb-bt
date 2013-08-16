@@ -47,7 +47,7 @@ describe('bt.toHtml()', function() {
                 ctx.setState('is-hovered');
             });
             bt.apply({ block: 'button' }).should.equal(
-                '<a class="button is-pressed" data-block="button"><div class="button__text is-hovered"></div></a>'
+                '<a class="button _is-pressed" data-block="button"><div class="button__text _is-hovered"></div></a>'
             );
         });
         it('should ignore null states', function() {

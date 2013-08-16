@@ -22,27 +22,27 @@ describe('ctx.setState()', function() {
     });
     it('should return state', function() {
         bt.match('component', function(ctx) {
-            ctx.setState('focused', 'yes');
-            ctx.getState('focused').should.equal('yes');
+            ctx.setState('focused');
+            ctx.getState('focused').should.equal(true);
         });
         bt.apply({ block: 'component', states: {type: 'button'} });
     });
-    it('should set bool state', function() {
+    it('should set string state', function() {
         bt.match('component', function(ctx) {
             ctx.setState('focused', 'yes');
             ctx.getState('focused').should.equal('yes');
         });
         bt.apply({ block: 'component' }).should.equal(
-            '<div class="component focused_yes" data-block="component"></div>'
+            '<div class="component _focused_yes" data-block="component"></div>'
         );
     });
-    it('should set string state', function() {
+    it('should set boolean state', function() {
         bt.match('component', function(ctx) {
             ctx.setState('is-focused');
             ctx.getState('is-focused').should.equal(true);
         });
         bt.apply({ block: 'component' }).should.equal(
-            '<div class="component is-focused" data-block="component"></div>'
+            '<div class="component _is-focused" data-block="component"></div>'
         );
     });
 });
