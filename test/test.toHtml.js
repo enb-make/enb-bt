@@ -83,7 +83,6 @@ describe('bt.toHtml()', function() {
             bt = new BT();
         });
         it('should render views', function() {
-//            bt.setDefaultView('button', 'def');
             bt.match('button_def*', function(ctx) {
                 ctx.setTag('a');
                 ctx.setContent([{elem: 'right'}]);
