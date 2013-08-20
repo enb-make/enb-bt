@@ -43,6 +43,19 @@ describe('matching', function() {
         });
         bt.apply({ block: 'button' }).should.equal('<span class="button"><i class="button__text"></i></span>');
     });
+    it('should multiple match block and child', function () {
+        bt.match('button', function(ctx) {
+            ctx.setTag('span');
+            ctx.disableDataAttrGeneration();
+            ctx.setContent([{ elem: 'icon' }, { elem: 'text' }]);
+        });
+        bt.match(['button__text', 'button__icon'], function(ctx) {
+            ctx.setTag('i');
+        });
+        bt.apply({ block: 'button' }).should.equal(
+            '<span class="button"><i class="button__icon"></i><i class="button__text"></i></span>'
+        );
+    });
     it('should match block and child using view', function () {
         bt.match('button_def', function(ctx) {
             ctx.setTag('span');
