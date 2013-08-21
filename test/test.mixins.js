@@ -26,7 +26,7 @@ describe('ctx.addMixin()', function() {
         });
         bt.apply({ block: 'button' }).should.equal(
             '<div class="button _init" data-block="button" ' +
-            'ondblclick="return {&quot;mixins&quot;:[{&quot;block&quot;:&quot;mix&quot;,&quot;param&quot;:1}]};"' +
+            'data-options="{&quot;mixins&quot;:[{&quot;block&quot;:&quot;mix&quot;,&quot;param&quot;:1}]}"' +
             '></div>'
         );
     });
@@ -35,11 +35,11 @@ describe('ctx.addMixin()', function() {
             ctx.addMixin({block: 'mix'});
         });
         bt.apply({ block: 'button', mixins: [{block: 'user-mix'}] }).should.equal(
-            '<div class="button _init" data-block="button" ondblclick="' +
-                'return {&quot;mixins&quot;:[' +
+            '<div class="button _init" data-block="button" data-options="' +
+                '{&quot;mixins&quot;:[' +
                     '{&quot;block&quot;:&quot;user-mix&quot;},' +
                     '{&quot;block&quot;:&quot;mix&quot;}' +
-                ']};' +
+                ']}' +
             '"></div>'
         );
     });
