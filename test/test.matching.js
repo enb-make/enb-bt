@@ -124,5 +124,32 @@ describe('matching', function() {
                 '<span class="button_foo-bar"><i class="button_foo-bar__text"></i></span>'
             );
         });
+
+        it('should match on most relevant matcher', function () {
+            bt.match('button_foo*', function (ctx) {
+                ctx.setTag('button');
+                ctx.disableDataAttrGeneration();
+                ctx.setContent({elem: 'text'});
+            });
+            bt.apply({block: 'button', view: 'foo-bar'}).should.eq(
+                '<button class="button_foo-bar"><i class="button_foo-bar__text"></i></button>'
+            );
+        });
+
+        it('should match on most relevant matcher using strict match', function () {
+            bt.match('button_foo*', function (ctx) {
+                ctx.setTag('button');
+                ctx.disableDataAttrGeneration();
+                ctx.setContent({elem: 'text'});
+            });
+            bt.match('button_foo-bar', function (ctx) {
+                ctx.setTag('div');
+                ctx.disableDataAttrGeneration();
+                ctx.setContent({elem: 'text'});
+            });
+            bt.apply({block: 'button', view: 'foo-bar'}).should.eq(
+                '<div class="button_foo-bar"><i class="button_foo-bar__text"></i></div>'
+            );
+        });
     });
 });
