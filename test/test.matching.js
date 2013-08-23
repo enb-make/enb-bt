@@ -95,4 +95,34 @@ describe('matching', function() {
             '<span class="button_def-xxx"><i class="button_def-xxx__text"></i></span>'
         );
     });
+
+    describe('block*', function () {
+        beforeEach(function () {
+            bt.match('button*', function (ctx) {
+                ctx.setTag('span');
+                ctx.disableDataAttrGeneration();
+                ctx.setContent({elem: 'text'});
+            });
+
+            bt.match('button*__text', function (ctx) {
+                ctx.setTag('i');
+            });
+        });
+
+        it('should match block and element without view', function () {
+            bt.apply({block: 'button'}).should.eq(
+                '<span class="button"><i class="button__text"></i></span>'
+            );
+        });
+
+        it('should match block and element with view', function () {
+            bt.apply({block: 'button', view: 'foo'}).should.eq(
+                '<span class="button_foo"><i class="button_foo__text"></i></span>'
+            );
+
+            bt.apply({block: 'button', view: 'foo-bar'}).should.eq(
+                '<span class="button_foo-bar"><i class="button_foo-bar__text"></i></span>'
+            );
+        });
+    });
 });
