@@ -221,7 +221,7 @@ bt.match('popup', function (ctx) {
 
 ```html
 <!-- {block: 'popup'} -->
-<div class="popup" data-block="popup _orientation_top"></div>
+<div class="popup _orientation_top" data-block="popup"></div>
 ```
 
 Миксины
