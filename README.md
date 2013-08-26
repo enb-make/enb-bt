@@ -157,63 +157,139 @@ bt.match('button_input', function (ctx) { // регистрируем матче
 
 На основе **view** изменяется и `CSS`-класс элементов. Для `{block: 'button', view: 'simple'}` элемент `text` получает класс `button_simple__text`.
 
-Состояния
----------
-
-Частью методологии BEViS являются состояния. Состояния могут быть выставлены в шаблонах:
+Селекторы можно писать на **view** по определенному префиксу. Например:
 
 ```javascript
-bt.match('button_simple', function (ctx) { // регистрируем матчер для view=simple блока button
+bt.match('button_simple*', function (ctx) {
     ctx.setTag('button');
-    ctx.setContent(ctx.getParam('title'));
 });
 ```
 
-Ниже в этом документе можно найти перечень методов класса Ctx. Дальше пойдем по примерам.
+Результат:
 
-Например, зададим блоку `button` тег `button`, а блоку `input` тег `input`:
+```html
+<!-- {block: 'button', view: 'simple-red'} -->
+<button class="button_simple-red" data-block="button"></button>
+```
+
+Для тех или иных блоков можно установить `view` по умолчанию:
 
 ```javascript
 module.exports = function(bt) {
-    bt.match('button', function(ctx) {
-        ctx.setTag('button');
-    });
-    bt.match('input', function(ctx) {
-        ctx.setTag('input');
-    });
+    bt.setDefaultView('button', 'simple');
+    // ...
 };
 ```
 
-Еще примеры
------------
+Надо заметить, что в BEViS отображение отделяется от поведения. Атрибут `data-block` 
+указывает на имя блока для привязки к JS, а CSS-классы участвуют в отображении.
 
-Например, мы хотим установить состояине `closed` для всех блоков `popup`:
+Состояния
+---------
+
+Частью методологии BEViS являются состояния. Они используются для визуального отображения (с помощью CSS)
+тех или иных ситуаций для блоков, элементов.
+
+Состояния могут быть выставлены в шаблонах:
 
 ```javascript
-bt.match('popup', function(ctx) {
-    ctx.setState('closed');
+bt.match('button', function (ctx) {
+    ctx.setTag('button');
+    if (ctx.getParam('disabled') === true) {
+        ctx.setState('disabled'); // добавляем CSS-класс _disabled
+        ctx.setAttr('disabled', true); // добавляем атрибут disabled
+    }
 });
 ```
 
-Преобразование BT JSON-дерева
------------------------------
+Результат:
 
-Кроме модификации элемента, функция-преобразователь может вернуть новый BT JSON.
-Здесь мы воспользуемся методами `ctx.getJson()` (возвращает текущий элемент BT JSON "как есть")
-и `ctx.setContent()` (возвращает или устанавливает контент).
+```html
+<!-- {block: 'button', disabled: true} -->
+<button class="button" data-block="button _disabled" disabled></button>
+```
 
-Например, обернем блок `header` блоком `header-wrapper`:
+Состояния могут принимать значения:
 
 ```javascript
-bt.match('header', function(ctx) {
-    return {
-        block: 'header-wrapper',
-        content: ctx.getJson()
-    };
-});
-bt.match('header-wrapper', function(ctx) {
-    ctx.setContent(ctx.getParam('content'));
+bt.match('popup', function (ctx) {
+    ctx.setState('orientation', 'top');
 });
 ```
 
-Метод `ctx.setContent` принимает BT JSON, который надо выставить для содержимого.
+Результат:
+
+```html
+<!-- {block: 'popup'} -->
+<div class="popup" data-block="popup _orientation_top"></div>
+```
+
+Миксины
+-------
+
+Миксины — классы, имеющие дополнительное поведение для тех или иных блоков.
+Миксины могут подмешиваться только к блокам, но не к элементам.
+
+Например, BT JSON:
+
+```javascript
+{block: 'input', mixins: [{name: 'auto-focus'}]}
+```
+
+С матчером:
+
+```javascript
+bt.match('input', function (ctx) {
+    ctx.setTag('input');
+});
+```
+
+Превращается в HTML:
+
+```html
+<input class="input _init" data-block="input" data-options="{mixins:[{name: 'auto-focus'}]}"/>
+```
+
+В дальшнейшем, при инициализации страницы, миксин будет инстанцирован для данного блока.
+
+Автоматическая инициализация
+----------------------------
+
+Автоматическая инициализация — это инициализация блоков при загрузке страницы.
+Она может требоваться самим блоком в шаблоне:
+
+```javascript
+bt.match('button', function (ctx) {
+    ctx.enableAutoInit();
+});
+```
+
+А может быть указана в BT JSON:
+
+```javascript
+{block: 'button', autoInit: true}
+```
+
+В обоих случаях HTML-элемент кнопки получает класс `_init`, который сообщает `YBlock` о том,
+что данный блок следует инициализировать автоматически.
+
+Данные
+------
+
+Исходными данными (BT JSON) являются:
+
+* Имя блока: `block` — `ctx.getBlockName()`.
+* Имя элемента: `elem` — `ctx.getElementName()`.
+* Имя отображения: `view` — `ctx.getView()`
+* Миксины блока: `mixins` — `ctx.getMixins()`
+* Флаг автоматической инициализации: `autoInit` — `ctx.isAutoInitEnabled()`
+* Прочие параметры, которые можно достать в шаблоне с помощью `ctx.getParam('paramName')`.
+
+Результирующие данные:
+
+* Имя тега: `ctx.setTag('button')`.
+* Атрибуты: `ctx.setAttr('href', '/')`.
+* Состояния: `ctx.setState('disabled')`.
+* Флаг автоматической инициализации: `ctx.enableAutoInit()`.
+* Опции инициализации блока: `ctx.setInitOption('optName', 'optValue')`.
+* Содержимое: `ctx.setContent({ elem: 'sub' })`.
