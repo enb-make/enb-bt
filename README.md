@@ -206,7 +206,7 @@ bt.match('button', function (ctx) {
 
 ```html
 <!-- {block: 'button', disabled: true} -->
-<button class="button" data-block="button _disabled" disabled></button>
+<button class="button _disabled" data-block="button" disabled></button>
 ```
 
 Состояния могут принимать значения:
