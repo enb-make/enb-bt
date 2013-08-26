@@ -290,6 +290,7 @@ bt.match('button', function (ctx) {
 * Имя тега: `ctx.setTag('button')`.
 * Атрибуты: `ctx.setAttr('href', '/')`.
 * Состояния: `ctx.setState('disabled')`.
+* Миксины блока: `mixins` — `ctx.addMixin({name: 'auto-focus', opt: 1})`
 * Флаг автоматической инициализации: `ctx.enableAutoInit()`.
 * Опции инициализации блока: `ctx.setInitOption('optName', 'optValue')`.
 * Содержимое: `ctx.setContent({ elem: 'sub' })`.
