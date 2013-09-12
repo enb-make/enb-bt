@@ -151,5 +151,21 @@ describe('matching', function() {
                 '<div class="button_foo-bar"><i class="button_foo-bar__text"></i></div>'
             );
         });
+
+        it('should apply returned content', function () {
+            bt.match('button', function (ctx) {
+                ctx.setTag('button');
+                ctx.disableDataAttrGeneration();
+                ctx.setContent({elem: 'text'});
+            });
+
+            bt.match('button__text', function () {
+                return 'Hello';
+            });
+
+            bt.apply({block: 'button'}).should.eq(
+                '<button class="button">Hello</button>'
+            );
+        });
     });
 });
