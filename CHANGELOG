@@ -1,3 +1,6 @@
+Версия 0.0.16:
+ * Метод `escape` в `ctx`.
+
 Версия 0.0.15:
  * Фикс `setContent({-> return String})`.
 
