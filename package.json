@@ -2,7 +2,7 @@
     "author" : "Marat Dulin <mdevils@yandex.ru>",
     "description" : "Faster btjson -> html transformer.",
     "name" : "enb-bt",
-    "version" : "0.0.16",
+    "version" : "0.0.17",
     "repository" : "https://github.com/enb-make/bt",
     "contributors": [
         {
