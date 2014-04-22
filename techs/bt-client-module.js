@@ -18,7 +18,7 @@
  * ```
  */
  var Vow = require('vow'),
-    vowFs = require('vow-fs'),
+    vowFs = require('enb/lib/fs/async-fs'),
     btClientProcessor = require('../lib/bt-client-processor');
 
 module.exports = require('enb/lib/build-flow').create()
