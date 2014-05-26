@@ -1,4 +1,4 @@
-BT [![Build Status](https://travis-ci.org/enb-make/bt.png?branch=master)](https://travis-ci.org/enb-make/bt)
+BT [![Build Status](https://travis-ci.org/enb-make/enb-bt.png?branch=master)](https://travis-ci.org/enb-make/enb-bt)
 ===
 
 BT = BEViS Templater.
