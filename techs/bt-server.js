@@ -1,16 +1,16 @@
 /**
  * bt-server
  * =========
- * 
+ *
  * Склеивает *bt*-файлы по deps'ам с помощью набора `require` в виде `?.bemhtml.js`.
- * 
+ *
  * **Опции**
- * 
+ *
  * * *String* **target** — Результирующий таргет. По умолчанию — `?.bemhtml.js`.
  * * *String* **filesTarget** — files-таргет, на основе которого получается список исходных файлов (его предоставляет технология `files`). По умолчанию — `?.files`.
- * 
+ *
  * **Пример**
- * 
+ *
  * ```javascript
  * nodeConfig.addTech(require('bt/techs/bt-server'));
  * ```
@@ -32,7 +32,7 @@ module.exports = require('enb/lib/build-flow').create()
         var node = this.node;
         /**
          * Генерирует `require`-строку для подключения исходных bt-файлов.
-         * 
+         *
          * @param {String} absPath
          * @param {String} pre
          * @param {String} post
@@ -71,8 +71,7 @@ module.exports = require('enb/lib/build-flow').create()
             btFiles.map(function(file) {
                 return buildRequire(file.fullname, '', '(bt)');
             }).join('\n'),
-            'module.exports = bt;',
-            'bt.BEMHTML = { apply: function(bemjson) { return bt.apply(bemjson); } };'
+            'module.exports = bt;'
         ].join('\n');
     })
     .createTech();

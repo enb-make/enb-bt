@@ -18,7 +18,7 @@
  * nodeConfig.addTech(require('bt/techs/bt-client-module'));
  * ```
  */
- var Vow = require('vow'),
+ var vow = require('vow'),
     vowFs = require('enb/lib/fs/async-fs'),
     btClientProcessor = require('../lib/bt-client-processor');
 
@@ -41,14 +41,14 @@ module.exports = require('enb/lib/build-flow').create()
         var dependencies = this._dependencies;
         var btFilePath = this._btFile;
         var targetPath = node.resolvePath(this._target);
-        return Vow.all([
+        return vow.all([
             vowFs.read(btFilePath, 'utf8').then(function(content) {
                 return {
                     filename: node.relativePath(btFilePath),
                     content: content
                 };
             }),
-            Vow.all(btFiles.map(function(file) {
+            vow.all(btFiles.map(function(file) {
                 return vowFs.read(file.fullname, 'utf8').then(function(content) {
                     return {
                         filename: node.relativePath(file.fullname),
