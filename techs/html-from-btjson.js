@@ -25,7 +25,7 @@ var vow = require('vow');
 
 module.exports = require('enb/lib/build-flow').create()
     .name('html-from-btjson')
-    .target('target', '?.html')
+    .target('target', '?.{lang}.html')
     .defineRequiredOption('lang')
     .useSourceFilename('btjsonFile', '?.btjson.js')
     .useSourceFilename('btFile', '?.bt.js')
