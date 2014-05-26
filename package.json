@@ -1,39 +1,40 @@
 {
-    "author" : "Marat Dulin <mdevils@yandex.ru>",
-    "description" : "Faster btjson -> html transformer.",
-    "name" : "enb-bt",
-    "version" : "0.0.17",
-    "repository" : "https://github.com/enb-make/bt",
-    "contributors": [
-        {
-            "name": "Marat Dulin",
-            "email": "mdevils@yandex.ru"
-        },
-        {
-            "name" : "Dmitry Filatov",
-            "email" : "dfilatov@yandex-team.ru"
-        }
-    ],
-    "peerDependencies": {
-        "enb": ">= 0.8.22"
+  "author": "Marat Dulin <mdevils@yandex.ru>",
+  "description": "Faster btjson -> html transformer.",
+  "name": "enb-bt",
+  "version": "1.0.0",
+  "repository": "https://github.com/enb-make/bt",
+  "contributors": [
+    {
+      "name": "Marat Dulin",
+      "email": "mdevils@yandex.ru"
     },
-    "dependencies": {
-        "inherit": "~2.1.0",
-        "vow": "~0.3.9"
-    },
-    "devDependencies": {
-        "mocha": "1.9.0",
-        "chai": "1.6.0",
-        "jshint": "2.1.x",
-        "jscs": "0.0.12"
-    },
-    "engines": {
-        "node": ">= 0.8.0"
-    },
-    "scripts": {
-        "test" : "npm run-script jshint && npm run-script check-style && npm run-script unit-test",
-        "jshint": "./node_modules/.bin/jshint .",
-        "unit-test": "./node_modules/.bin/mocha -u bdd -R spec --recursive test",
-        "check-style": "./node_modules/jscs/bin/jscs ."
+    {
+      "name": "Dmitry Filatov",
+      "email": "dfilatov@yandex-team.ru"
     }
+  ],
+  "peerDependencies": {
+    "enb": ">= 0.8.22"
+  },
+  "dependencies": {
+    "inherit": "~2.1.0",
+    "vow": "~0.3.9",
+    "enb-source-map": "^1.3.0"
+  },
+  "devDependencies": {
+    "mocha": "1.9.0",
+    "chai": "1.6.0",
+    "jshint": "2.1.x",
+    "jscs": "0.0.12"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "test": "npm run-script jshint && npm run-script check-style && npm run-script unit-test",
+    "jshint": "./node_modules/.bin/jshint .",
+    "unit-test": "./node_modules/.bin/mocha -u bdd -R spec --recursive test",
+    "check-style": "./node_modules/jscs/bin/jscs ."
+  }
 }
