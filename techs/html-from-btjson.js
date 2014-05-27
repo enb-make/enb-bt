@@ -15,7 +15,7 @@
  * **Пример**
  *
  * ```javascript
- * nodeConfig.addTech(require('bt/techs/bt-server'));
+ * nodeConfig.addTech(require('enb-bt/techs/bt-server'));
  * ```
  */
 

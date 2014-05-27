@@ -15,7 +15,7 @@
  * **Пример**
  *
  * ```javascript
- * nodeConfig.addTech(require('bt/techs/bt-client-module'));
+ * nodeConfig.addTech(require('enb-bt/techs/bt-client-module'));
  * ```
  */
  var vow = require('vow'),
