@@ -9,6 +9,7 @@
  * **Опции**
  *
  * * *String* **target** — Результирующий таргет. По умолчанию — `?.bt.client.js`.
+ * * *Object* **dependencies** — Зависимости. По умолчанию — `{i18n: 'y-i18n'}`.
  * * *String* **filesTarget** — files-таргет, на основе которого получается список
  *   исходных файлов (его предоставляет технология `files`). По умолчанию — `?.files`.
  *
@@ -26,7 +27,7 @@ module.exports = require('enb/lib/build-flow').create()
     .name('bt-client-module')
     .target('target', '?.bt.client.js')
     .defineOption('btFile', '')
-    .defineOption('dependencies', {})
+    .defineOption('dependencies', {i18n: 'y-i18n'})
     .useFileList(['bt.js'])
     .needRebuild(function(cache) {
         this._btFile = this._btFile || 'node_modules/enb-bt/lib/bt.js';
