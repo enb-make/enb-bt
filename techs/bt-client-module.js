@@ -26,6 +26,7 @@
 module.exports = require('enb/lib/build-flow').create()
     .name('bt-client-module')
     .target('target', '?.bt.client.js')
+    .defineOption('useSourceMap', true)
     .defineOption('btFile', '')
     .defineOption('dependencies', {i18n: 'y-i18n'})
     .useFileList(['bt.js'])
@@ -58,7 +59,7 @@ module.exports = require('enb/lib/build-flow').create()
                 });
             }))
         ]).spread(function(btEngine, inputSources) {
-            return btClientProcessor.buildModule(targetPath, btEngine, inputSources, dependencies);
-        });
+            return btClientProcessor.buildModule(targetPath, btEngine, inputSources, dependencies, this._useSourceMap);
+        }.bind(this));
     })
     .createTech();
