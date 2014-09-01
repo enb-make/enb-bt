@@ -40,12 +40,6 @@ module.exports = require('enb/lib/build-flow').create()
             asyncRequire(i18nFilename)
         ]).spread(function (btjson, bt, i18n) {
             bt.lib.i18n = i18n();
-            if (bt.lib.global) {
-                bt.lib.global.lang = this.getOption('lang');
-                if (bt.lib.global.setTld) {
-                    bt.lib.global.setTld(this.getOption('lang'));
-                }
-            }
             return bt.apply(btjson);
         }.bind(this));
     })
