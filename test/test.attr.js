@@ -26,6 +26,12 @@ describe('ctx.setAttr()', function() {
         });
         bt.apply({ block: 'button' }).should.equal('<div class="button" data-block="button" type="button"></div>');
     });
+    it('should set a hash of attrs', function() {
+        bt.match('button', function(ctx) {
+            ctx.setAttr({ 'type': 'button' });
+        });
+        bt.apply({ block: 'button' }).should.equal('<div class="button" data-block="button" type="button"></div>');
+    });
     it('should render non-value attrs', function() {
         bt.match('button', function(ctx) {
             ctx.setTag('button');
