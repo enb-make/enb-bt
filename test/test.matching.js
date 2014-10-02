@@ -12,7 +12,7 @@ describe('matching', function() {
             ctx.disableCssClassGeneration();
             ctx.disableDataAttrGeneration();
             return [
-                '<!DOCTYPE>',
+                {raw: '<!DOCTYPE>'},
                 ctx.getJson()
             ];
         });
@@ -30,7 +30,7 @@ describe('matching', function() {
         bt.match('page', function() {
             return 0;
         });
-        bt.apply({ block: 'page' }).should.equal(0);
+        bt.apply({ block: 'page' }).should.equal('0');
     });
     it('should match block and child', function () {
         bt.match('button', function(ctx) {
