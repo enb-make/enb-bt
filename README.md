@@ -293,4 +293,5 @@ bt.match('button', function (ctx) {
 * Миксины блока: `mixins` — `ctx.addMixin({name: 'auto-focus', opt: 1})`
 * Флаг автоматической инициализации: `ctx.enableAutoInit()`.
 * Опции инициализации блока: `ctx.setInitOption('optName', 'optValue')`.
-* Содержимое: `ctx.setContent({ elem: 'sub' })`.
+* Содержимое: `ctx.setContent({ elem: 'sub' })`. 
+* Содержимое с отключенным эскейпингом: `ctx.setContent({ raw: { elem: 'sub' } })`.
